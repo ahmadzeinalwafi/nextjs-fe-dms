@@ -47,8 +47,8 @@ export default function Home() {
               </div>
               <div className="card bg-red-900 p-6 shadow-lg">
                 <div className="card-body">
-                  <h3 className="text-xl font-semibold mb-4">Analytics & Insights</h3>
-                  <p>Analyze performance and gain actionable insights with AI-powered analytics.</p>
+                  <h3 className="text-xl font-semibold mb-4">Analytics & Insights [SOON]</h3>
+                  <p>Analyze performance and gain actionable insights with AI-powered analytics. </p>
                 </div>
               </div>
               <div className="card bg-purple-900 p-6 shadow-lg">
@@ -84,7 +84,7 @@ export default function Home() {
                 <div id="slide1" className="carousel-item relative w-full">
                   <div className="flex justify-center items-center h-full">
                     <p className="text-center w-1/2">
-                      In today's world of interconnected devices, managing and monitoring each IoT unit can often become overwhelming. That's why we created Node Sphere, a comprehensive platform designed to make the management of your IoT devices more efficient and seamless.
+                      In today's world of interconnected devices, managing and monitoring each IoT unit can often become overwhelming. That's why I created <span className="text-yellow-300">Node Sphere</span>, a comprehensive platform designed to make the management of your IoT devices more efficient and seamless. <br/> [1]
                     </p>
                   </div>
 
@@ -96,7 +96,7 @@ export default function Home() {
                 <div id="slide2" className="carousel-item relative w-full">
                   <div className="flex justify-center items-center h-full">
                     <p className="text-center w-1/2">
-                      Node Sphere gives you the ability to monitor your entire IoT ecosystem in real-time. Our intuitive dashboard allows you to easily track device performance, manage configurations, and receive instant alerts if something goes wrong. Whether you're overseeing just a few devices or managing an entire network, Node Sphere adapts to meet your needs.
+                    <span className="text-yellow-300">Node Sphere</span> gives you the ability to monitor your entire IoT ecosystem in real-time. Our intuitive dashboard allows you to easily track device performance, manage configurations, and receive instant alerts if something goes wrong. Whether you're overseeing just a few devices or managing an entire network, <span className="text-yellow-300">Node Sphere</span> adapts to meet your needs. <br/> [2]
                     </p>
                   </div>
                   <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
@@ -107,7 +107,7 @@ export default function Home() {
                 <div id="slide3" className="carousel-item relative w-full">
                   <div className="flex justify-center items-center h-full">
                     <p className="text-center w-1/2">
-                      What makes Node Sphere stand out is its simplicity and scalability. You don't have to worry about the size of your network, as our platform grows with your needs. You can trust Node Sphere to streamline your operations and provide you with accurate, real-time insights on the health of each device.
+                      What makes <span className="text-yellow-300">Node Sphere</span> stand out is its simplicity and scalability. You don't have to worry about the size of your network, as the platform grows with your needs. You can trust <span className="text-yellow-300">Node Sphere</span> to streamline your operations and provide you with accurate, real-time insights on the health of each device. <br/> [3]
                     </p>
                   </div>
                   <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
@@ -118,8 +118,7 @@ export default function Home() {
                 <div id="slide4" className="carousel-item relative w-full">
                   <div className="flex justify-center items-center h-full">
                     <p className="text-center w-1/2">
-                      With robust security features, you can rest assured knowing your data and devices are protected. Node Sphere ensures that every device in your network is functioning optimally and securely, giving you more time to focus on what matters most.
-
+                      With robust security features, you can rest assured knowing your data and devices are protected. <span className="text-yellow-300">Node Sphere</span> ensures that every device in your network is functioning optimally and securely, giving you more time to focus on what matters most. <br/> [4]
                     </p>
                   </div>
                   <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
