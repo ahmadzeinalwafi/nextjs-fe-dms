@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function SideMenu({devices}) {
     console.log('Received devices:', devices);
 
@@ -12,13 +14,13 @@ export default function SideMenu({devices}) {
                         <summary>Devices</summary>
                         <ul>
                             <li>
-                                <a>Add Devices</a>
+                                <a href="/dashboard/devices/add">Add Devices</a>
                             </li>
                             <li>
-                                <a>Setup Devices</a>
+                                <a href="/dashboard/devices/setup">Setup Devices</a>
                             </li>
                             <li>
-                                <a>Devices Summary</a>
+                                <a href="/dashboard/devices/summary">Devices Summary</a>
                             </li>
                             <li>
                                 <details open>
