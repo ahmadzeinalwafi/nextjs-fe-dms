@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
 import TextInput from "@/app/_components/TextInput";
+import axios from "axios";
 
 const useForm = (initialValues) => {
     const [values, setValues] = useState(initialValues);
@@ -26,6 +27,18 @@ export default function Login() {
         e.preventDefault();
 
         console.log(formData)
+        try {
+            const response = await axios.post('/api/login', formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            console.log('Response:', response.data);
+        } catch (error) {
+            alert(error)
+            console.error('Error submitting form:', error);
+        }
     };
 
     return (
