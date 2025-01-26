@@ -46,8 +46,8 @@ export default function AddDevices() {
             <SideMenu devices={devices} />
 
             {/* Main Content */}
-            <div className="flex-1 flex items-center justify-center bg-gray-900 text-white">
-                <div className="card w-[50%] bg-gray-800 shadow-xl">
+            <div className="flex-1 flex items-center justify-center bg-gray-900 text-white overflow-y-auto">
+                <div className="card w-[50%] bg-gray-800 shadow-xl mt-[-180px]">
                     <div className="card-body">
                         <h2 className="card-title text-center">Add Device</h2>
                         <form onSubmit={handleSubmit}>
