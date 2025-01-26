@@ -19,7 +19,7 @@ export default function DeviceTable() {
                     const response = await axios.get(
                         `${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/users/${userId}/devices`
                     );
-                    console.log(response);
+                    // console.log(response);
                     // Map over devices to format 'Created_At' directly after fetching
                     const formattedDevices = response.data.data.map((device) => ({
                         ...device,
@@ -28,16 +28,23 @@ export default function DeviceTable() {
                     setDevices(formattedDevices);
                 }
             } catch (error) {
-                console.error("Failed to fetch devices:", error.response?.data || error.message);
+                console.error("Failed to fetch devices:", err);
             }
         };
 
         fetchDevices();
     }, []);
 
-    const handleDelete = (deviceId) => {
-        const updatedDevices = devices.filter((device) => device.Device_Id !== deviceId);
-        setDevices(updatedDevices);
+    const handleDelete = async (deviceId) => {
+        try {
+            await axios.delete(
+                `${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/devices/${deviceId}`,
+            );
+            setToastMessage(`Device ${deviceId} has been deleted`);
+            setTimeout(() => window.location.href = "/dashboard/devices/summary", 1000);
+        } catch (err){
+            alert(err)
+        }
     };
 
     const handleCopyToken = (token) => {

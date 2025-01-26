@@ -59,9 +59,10 @@ export default function AddDevices() {
                 `${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/devices`,
                 formData
             );
-            window.location.href = "/dashboard/devices/add";
             setToastMessage("Device has been added, please configure it before usage");
-            setTimeout(() => setToastMessage(""), 5000);
+            setTimeout(() => {
+                window.location.href = "/dashboard/devices/add";
+            }, 3000);
             setIsLoading(false)
         } catch (err) {
             alert(err)
