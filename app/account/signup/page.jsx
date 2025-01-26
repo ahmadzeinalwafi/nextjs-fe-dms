@@ -1,6 +1,8 @@
 "use client"
+import axios from "axios";
 import { useState } from "react";
 import TextInput from "@/app/_components/TextInput";
+import SuccessAlert from "@/app/_components/Alert/SuccessAlert";
 
 const useForm = (initialValues) => {
     const [values, setValues] = useState(initialValues);
@@ -23,16 +25,31 @@ export default function SignUp() {
         password: '',
     });
 
+    const [isSuccess, setIsSuccess] = useState(false);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            const response = await axios.post(
+                process.env.BASE_BACKEND_URL + "/users",
+                formData
+            );
+            console.log(response.data);
 
-        console.log(formData)
+            setIsSuccess(true);
+        } catch (error) {
+            console.error("Registration failed:", error.response?.data || error.message);
+            setIsSuccess(false);
+        }
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
             <div className="card w-96 bg-gray-800 shadow-xl">
                 <div className="card-body">
+                    {isSuccess && (
+                        <SuccessAlert message={"Registration successful, please login to verify your account"} />
+                    )}
                     <h2 className="card-title text-center">Sign Up</h2>
                     <form onSubmit={handleSubmit}>
                         <TextInput
@@ -64,13 +81,13 @@ export default function SignUp() {
                                 type="submit"
                                 className="btn btn-neutral w-full bg-indigo-700 hover:bg-indigo-900"
                             >
-                                Login
+                                Sign Up
                             </button>
                         </div>
                     </form>
-                <p className="text-center">
-                    Already have account? <br/> Please <a href="/account/login"><span className="text-blue-500">login</span></a> to access the feature of <br/> <span className="text-yellow-300">Node Sphere</span>
-                </p>
+                    <p className="text-center">
+                        Already have account? <br /> Please <a href="/account/login"><span className="text-blue-500">login</span></a> to access the feature of <br /> <span className="text-yellow-300">Node Sphere</span>
+                    </p>
                 </div>
             </div>
         </div>
