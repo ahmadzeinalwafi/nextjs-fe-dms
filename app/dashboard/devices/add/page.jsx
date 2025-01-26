@@ -43,7 +43,7 @@ export default function AddDevices() {
 
     return (
         <div className="flex h-screen">
-            <SideMenu devices={devices} />
+            <SideMenu/>
 
             {/* Main Content */}
             <div className="flex-1 flex items-center justify-center bg-gray-900 text-white overflow-y-auto">

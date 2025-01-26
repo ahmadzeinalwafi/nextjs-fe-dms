@@ -1,55 +1,39 @@
-"use client";
+"use client"
 import { useState, useEffect } from "react";
+import axios from "axios";
 import SideMenu from "@/app/_components/SideMenu";
 import { FaCopy } from "react-icons/fa"; // Copy icon from react-icons
 
 export default function DeviceTable() {
-    // Mock device data
-    const mockDevices = [
-        {
-            Device_Id: "1",
-            Name: "Device A",
-            Type: "Sensor",
-            Location: "Room 101",
-            Token: "abc123",
-            Status: "Active",
-            Description: "Temperature sensor",
-            Created_At: new Date("2023-01-01T10:00:00Z")
-        },
-        {
-            Device_Id: "2",
-            Name: "Device B",
-            Type: "Camera",
-            Location: "Lobby",
-            Token: "xyz456",
-            Status: "Inactive",
-            Description: "Security camera",
-            Created_At: new Date("2023-02-15T14:30:00Z")
-        },
-        {
-            Device_Id: "3",
-            Name: "Device C",
-            Type: "Actuator",
-            Location: "Room 202",
-            Token: "lmn789",
-            Status: "Active",
-            Description: "Door actuator",
-            Created_At: new Date("2023-03-10T08:20:00Z")
-        }
-    ];
-
-    const [devices, setDevices] = useState(mockDevices);
-    const [formattedDevices, setFormattedDevices] = useState([]);
+    const [devices, setDevices] = useState([]);
     const [toastMessage, setToastMessage] = useState("");
 
     useEffect(() => {
-        // Format the date for each device after the component is mounted
-        const formatted = devices.map((device) => ({
-            ...device,
-            Created_At: device.Created_At.toLocaleString()
-        }));
-        setFormattedDevices(formatted);
-    }, [devices]);
+        const fetchDevices = async () => {
+            try {
+                const userId = document.cookie
+                    .split("; ")
+                    .find((row) => row.startsWith("dms-user-id="))?.split("=")[1];
+
+                if (userId) {
+                    const response = await axios.get(
+                        `${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/users/${userId}/devices`
+                    );
+                    console.log(response);
+                    // Map over devices to format 'Created_At' directly after fetching
+                    const formattedDevices = response.data.data.map((device) => ({
+                        ...device,
+                        Created_At: new Date(device.Created_At).toLocaleString()
+                    }));
+                    setDevices(formattedDevices);
+                }
+            } catch (error) {
+                console.error("Failed to fetch devices:", error.response?.data || error.message);
+            }
+        };
+
+        fetchDevices();
+    }, []);
 
     const handleDelete = (deviceId) => {
         const updatedDevices = devices.filter((device) => device.Device_Id !== deviceId);
@@ -62,6 +46,14 @@ export default function DeviceTable() {
             setTimeout(() => setToastMessage(""), 3000);
         });
     };
+
+    if (devices.length === 0) {
+        return (
+            <div className="menu bg-base-200 w-56 overflow-y-auto flex justify-center items-center h-screen">
+                <span className="loading loading-spinner loading-lg"></span>
+            </div>
+        );
+    }
 
     return (
         <div className="flex h-screen bg-gray-900">
@@ -83,7 +75,7 @@ export default function DeviceTable() {
                         </tr>
                     </thead>
                     <tbody>
-                        {formattedDevices.map((device) => (
+                        {devices.map((device) => (
                             <tr key={device.Device_Id}>
                                 <td className="px-4 py-2 border-b">{device.Device_Id}</td>
                                 <td className="px-4 py-2 border-b">{device.Name}</td>

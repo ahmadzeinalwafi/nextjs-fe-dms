@@ -25,6 +25,7 @@ export default function Navbar() {
                     <li><a href="/">Home</a></li>
                     <li><a href="/about/developer">About Developer</a></li>
                     <li><a href="/about/project">White Paper Project</a></li>
+                    <li><a href="/documentation">User Documentation</a></li>
                     <li><a href="/dashboard">Dashboard</a></li>
                     {isLogin ? (
                         <li>

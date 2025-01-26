@@ -53,7 +53,7 @@ export default function SetupDevices() {
     
     return (
         <div className="flex h-screen bg-gray-900">
-            <SideMenu devices={devices} />
+            <SideMenu/>
 
             {/* Main Content */}
             <div className="flex-1 flex flex-col items-center justify-start bg-gray-900 text-white overflow-y-auto">

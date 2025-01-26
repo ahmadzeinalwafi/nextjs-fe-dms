@@ -1,23 +1,11 @@
-import axios from "axios";
-import { cookies } from 'next/headers'
+"use client"
 
 import SideMenu from "../_components/SideMenu"
 
-export default async function Dashboard() {
-    const cookieStore = await cookies()
-    const token = cookieStore.get('dms-token').value
-    const userId = cookieStore.get('dms-user-id').value
-
-    let devices = [
-        {
-            "Name": "Device1"
-        }
-    ]
-
+export default function Dashboard() {
     return (
         <div className="flex h-screen">
-
-            <SideMenu devices={devices} />
+            <SideMenu />
 
             {/* Main Content */}
             <div className="flex-1 bg-base-100 p-4 overflow-y-auto">
