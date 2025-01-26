@@ -1,8 +1,6 @@
 import Link from 'next/link';
 
 export default function SideMenu({devices}) {
-    console.log('Received devices:', devices);
-
     return (
         <div className="menu bg-base-200 w-56 overflow-y-auto">
             <ul>
