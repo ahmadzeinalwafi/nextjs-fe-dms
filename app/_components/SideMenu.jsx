@@ -57,7 +57,7 @@ export default function SideMenu() {
                                     <summary>Devices Details</summary>
                                     <ul>
                                         {data.map((element) => (
-                                            <li key={element.Name}>
+                                            <li key={element.Device_Id}>
                                                 <a>{element.Name}</a>
                                             </li>
                                         ))}

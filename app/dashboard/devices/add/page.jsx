@@ -1,5 +1,6 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import TextInput from "@/app/_components/TextInput";
 import SelectInput from "@/app/_components/SelectInput";
 import TextArea from "@/app/_components/TextArea";
@@ -20,12 +21,27 @@ const useForm = (initialValues) => {
 };
 
 export default function AddDevices() {
-    let devices = [
-        {
-            "Name": "Device1"
-        }
-    ]
+    const [toastMessage, setToastMessage] = useState("");
+    const [userId, setUserId] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
+    useEffect(() => {
+        const fetchDevices = async () => {
+            try {
+                const userId = document.cookie
+                    .split("; ")
+                    .find((row) => row.startsWith("dms-user-id="))?.split("=")[1];
+
+                setUserId(userId)
+                console.log(userId)
+            } catch (error) {
+                console.error("Failed to fetch devices:", error.response?.data || error.message);
+            }
+        };
+
+        fetchDevices();
+    }, []);
+    
     const [formData, handleInputChange] = useForm({
         name: '',
         type: '',
@@ -36,10 +52,31 @@ export default function AddDevices() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true)
+        formData.owner = userId
+        try {
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/devices`,
+                formData
+            );
+            window.location.href = "/dashboard/devices/add";
+            setToastMessage("Device has been added, please configure it before usage");
+            setTimeout(() => setToastMessage(""), 5000);
+            setIsLoading(false)
+        } catch (err) {
+            alert(err)
+            setIsLoading(false)
+        }
 
-        console.log(formData)
     };
 
+    if (isLoading == true){
+        return (
+            <div className="menu bg-base-200 w-56 overflow-y-auto flex justify-center items-center h-screen">
+                <span className="loading loading-spinner loading-lg"></span>
+            </div>
+        );
+    }
 
     return (
         <div className="flex h-screen">
@@ -47,7 +84,7 @@ export default function AddDevices() {
 
             {/* Main Content */}
             <div className="flex-1 flex items-center justify-center bg-gray-900 text-white overflow-y-auto">
-                <div className="card w-[50%] bg-gray-800 shadow-xl mt-[-180px]">
+                <div className="card w-[50%] bg-gray-800 shadow-xl">
                     <div className="card-body">
                         <h2 className="card-title text-center">Add Device</h2>
                         <form onSubmit={handleSubmit}>
@@ -101,6 +138,13 @@ export default function AddDevices() {
                     </div>
                 </div>
             </div>
+            {toastMessage && (
+                    <div className="toast toast-end absolute bottom-0 right-0 p-4">
+                        <div className="alert alert-success">
+                            <span>{toastMessage}</span>
+                        </div>
+                    </div>
+                )}
         </div>
     );
 }
