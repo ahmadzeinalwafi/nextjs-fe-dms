@@ -2,7 +2,6 @@ import Image from "next/image";
 import Footer from "./_components/Footer";
 
 export default function Home() {
-  console.log(process.env.BASE_BACKEND_URL)
 
   return (
     <div>

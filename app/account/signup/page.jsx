@@ -31,11 +31,9 @@ export default function SignUp() {
         e.preventDefault();
         try {
             const response = await axios.post(
-                process.env.BASE_BACKEND_URL + "/users",
+                `${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/users`,
                 formData
             );
-            console.log(response.data);
-
             setIsSuccess(true);
         } catch (error) {
             console.error("Registration failed:", error.response?.data || error.message);

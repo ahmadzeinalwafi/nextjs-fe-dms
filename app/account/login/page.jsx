@@ -2,9 +2,13 @@
 import { useState } from "react";
 import TextInput from "@/app/_components/TextInput";
 import axios from "axios";
+import SuccessAlert from "@/app/_components/Alert/SuccessAlert";
+import { useRouter } from 'next/navigation'
 
 const useForm = (initialValues) => {
     const [values, setValues] = useState(initialValues);
+    const router = useRouter()
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,22 +22,27 @@ const useForm = (initialValues) => {
 };
 
 export default function Login() {
+    const router = useRouter()
     const [formData, handleInputChange] = useForm({
         email: '',
         password: '',
     });
 
+    const [isSuccess, setIsSuccess] = useState(false);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(formData)
         try {
             const response = await axios.post('/api/login', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
-    
+            setIsSuccess(true)
+            setTimeout(() => {
+                router.push('/dashboard'); 
+            }, 2000);
             console.log('Response:', response.data);
         } catch (error) {
             alert(error)
@@ -45,6 +54,9 @@ export default function Login() {
         <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
             <div className="card w-96 bg-gray-800 shadow-xl">
                 <div className="card-body">
+                    {isSuccess && (
+                        <SuccessAlert message={"Login successful, please enjoy the platform!"} />
+                    )}{/*  */}
                     <h2 className="card-title text-center">Login</h2>
                     <form onSubmit={handleSubmit}>
                         <TextInput
@@ -72,9 +84,9 @@ export default function Login() {
                             </button>
                         </div>
                     </form>
-                <p className="text-center">
-                    Are you doesn't have account currently? <br/> Please <a href="/account/signup"><span className="text-blue-500">sign up</span></a> to access the feature of <br/> <span className="text-yellow-300">Node Sphere</span>
-                </p>
+                    <p className="text-center">
+                        Are you doesn't have account currently? <br /> Please <a href="/account/signup"><span className="text-blue-500">sign up</span></a> to access the feature of <br /> <span className="text-yellow-300">Node Sphere</span>
+                    </p>
                 </div>
             </div>
         </div>
