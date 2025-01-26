@@ -1,19 +1,45 @@
 "use client"
 import SideMenu from "@/app/_components/SideMenu"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function SetupDevices() {
-    let devices = [
-        {
-            "Device_Id": "device_id",
-            "Name": "Device1"
-        }
-    ]
-    const [selectedDevice, setSelectedDevice] = useState(devices[0]);
+    const [toastMessage, setToastMessage] = useState("");
+
+    const [data, setData] = useState(null);
+    const [selectedDevice, setSelectedDevice] = useState(""); // Initialize as empty string
     const [formData, setFormData] = useState([
         { key: 'temperature', unit: 'float64' },
         { key: '', unit: '' },
     ]);
+
+    useEffect(() => {
+        const fetchDevices = async () => {
+            try {
+                const userId = document.cookie
+                    .split("; ")
+                    .find((row) => row.startsWith("dms-user-id="))?.split("=")[1];
+
+                if (userId) {
+                    const response = await axios.get(
+                        `${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/users/${userId}/devices`
+                    );
+                    console.log(response);
+                    setData(response.data.data);
+                }
+            } catch (error) {
+                console.error("Failed to fetch devices:", error.response?.data || error.message);
+            }
+        };
+
+        fetchDevices();
+    }, []);
+
+    useEffect(() => {
+        if (data && data.length > 0) {
+            setSelectedDevice(data[0].Device_Id); // Update selectedDevice once data is available
+        }
+    }, [data]); // This will run whenever data changes
 
     const handleAddField = () => {
         setFormData([
@@ -42,15 +68,35 @@ export default function SetupDevices() {
             }
             return acc;
         }, {});
-    
+
         const payload = {
-            Device_Id: selectedDevice.Device_Id,
+            Device_Id: selectedDevice,
             Fields: fields
         };
-    
+        try {
+            let response = await axios.post(
+                `${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/devices/${selectedDevice}/setup`,
+                payload
+            )
+            setToastMessage("Device has been configured, you can use the device now");
+            setTimeout(() => {
+                window.location.href = "/dashboard/devices/setup";
+            }, 3000);
+        } catch (err){
+            alert(err)
+        }
+
         console.log(payload);
     };
-    
+
+    if (data === null) {
+        return (
+            <div className="menu bg-base-200 w-56 overflow-y-auto flex justify-center items-center h-screen">
+                <span className="loading loading-spinner loading-lg"></span>
+            </div>
+        );
+    }
+
     return (
         <div className="flex h-screen bg-gray-900">
             <SideMenu/>
@@ -66,8 +112,8 @@ export default function SetupDevices() {
                                 value={selectedDevice}
                                 onChange={(e) => setSelectedDevice(e.target.value)}
                             >
-                                {devices.map((device, index) => (
-                                    <option key={index} value={device.Name}>
+                                {data.map((device, index) => (
+                                    <option key={index} value={device.Device_Id}>
                                         {device.Name} - {device.Device_Id}
                                     </option>
                                 ))}
@@ -92,7 +138,7 @@ export default function SetupDevices() {
                                         <option value="float32">float32</option>
                                         <option value="int8">int8</option>
                                         <option value="int16">int16</option>
-                                        <option value="in32">int32</option>
+                                        <option value="int32">int32</option>
                                         <option value="int64">int64</option>
                                         <option value="string">string</option>
                                     </select>
@@ -125,6 +171,13 @@ export default function SetupDevices() {
                     </div>
                 </div>
             </div>
+            {toastMessage && (
+                    <div className="toast toast-end absolute bottom-0 right-0 p-4">
+                        <div className="alert alert-success">
+                            <span>{toastMessage}</span>
+                        </div>
+                    </div>
+                )}
         </div>
     )
 }
