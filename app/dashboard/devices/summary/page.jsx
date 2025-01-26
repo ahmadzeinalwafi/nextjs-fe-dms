@@ -1,6 +1,7 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import SideMenu from "@/app/_components/SideMenu";
+import { FaCopy } from "react-icons/fa"; // Copy icon from react-icons
 
 export default function DeviceTable() {
     // Mock device data
@@ -39,6 +40,7 @@ export default function DeviceTable() {
 
     const [devices, setDevices] = useState(mockDevices);
     const [formattedDevices, setFormattedDevices] = useState([]);
+    const [toastMessage, setToastMessage] = useState("");
 
     useEffect(() => {
         // Format the date for each device after the component is mounted
@@ -54,10 +56,17 @@ export default function DeviceTable() {
         setDevices(updatedDevices);
     };
 
+    const handleCopyToken = (token) => {
+        navigator.clipboard.writeText(token).then(() => {
+            setToastMessage("Token copied to clipboard!");
+            setTimeout(() => setToastMessage(""), 3000);
+        });
+    };
+
     return (
         <div className="flex h-screen bg-gray-900">
             <SideMenu devices={devices} />
-            <div className="w-full max-w-4xl mx-auto p-6 overflow-y-auto">
+            <div className="w-full max-w-4xl mx-auto p-4 overflow-y-auto">
                 <h2 className="text-2xl font-bold mb-6 text-center">Device List</h2>
                 <table className="table-auto w-full text-left border-collapse">
                     <thead>
@@ -80,7 +89,17 @@ export default function DeviceTable() {
                                 <td className="px-4 py-2 border-b">{device.Name}</td>
                                 <td className="px-4 py-2 border-b">{device.Type}</td>
                                 <td className="px-4 py-2 border-b">{device.Location}</td>
-                                <td className="px-4 py-2 border-b">{device.Token}</td>
+                                <td className="px-4 py-2 border-b">
+                                    <div className="flex items-center">
+                                        <span className="mr-2">••••••</span>
+                                        <button
+                                            className="btn btn-ghost text-blue-500"
+                                            onClick={() => handleCopyToken(device.Token)}
+                                        >
+                                            <FaCopy />
+                                        </button>
+                                    </div>
+                                </td>
                                 <td className="px-4 py-2 border-b">{device.Status}</td>
                                 <td className="px-4 py-2 border-b">{device.Description}</td>
                                 <td className="px-4 py-2 border-b">{device.Created_At}</td>
@@ -96,6 +115,15 @@ export default function DeviceTable() {
                         ))}
                     </tbody>
                 </table>
+
+                {/* Toast Notification */}
+                {toastMessage && (
+                    <div className="toast toast-end absolute bottom-0 right-0 p-4">
+                        <div className="alert alert-success">
+                            <span>{toastMessage}</span>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
