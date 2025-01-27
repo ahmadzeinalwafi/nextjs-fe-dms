@@ -2,7 +2,7 @@ export default function TextInput({ label, name, type, value, onChange, placehol
     return (
       <div className="form-control">
         <label htmlFor={name} className="label">
-          <span className="label-text">{label}</span>
+          <span className="label-text text-white">{label}</span>
         </label>
         <input
           id={name}
@@ -11,7 +11,7 @@ export default function TextInput({ label, name, type, value, onChange, placehol
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className="input input-bordered bg-gray-700 text-white"
+          className="input input-bordered  text-white"
         />
       </div>
     );
