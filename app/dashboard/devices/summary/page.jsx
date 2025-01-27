@@ -19,8 +19,7 @@ export default function DeviceTable() {
                     const response = await axios.get(
                         `${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/users/${userId}/devices`
                     );
-                    // console.log(response);
-                    // Map over devices to format 'Created_At' directly after fetching
+
                     const formattedDevices = response.data.data.map((device) => ({
                         ...device,
                         Created_At: new Date(device.Created_At).toLocaleString()
@@ -65,7 +64,7 @@ export default function DeviceTable() {
     return (
         <div className="flex h-screen bg-gray-900">
             <SideMenu devices={devices} />
-            <div className="w-full max-w-4xl mx-auto p-4 overflow-y-auto">
+            <div className="w-full max-w-7xl mx-auto p-10 overflow-y-auto">
                 <h2 className="text-2xl font-bold mb-6 text-center">Device List</h2>
                 <table className="table-auto w-full text-left border-collapse">
                     <thead>

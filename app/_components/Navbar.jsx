@@ -30,7 +30,7 @@ export default function Navbar() {
                     {isLogin ? (
                         <li>
                             <button
-                                className="btn btn-error btn-sm"
+                                className="btn btn-error btn-sm mt-[2px]"
                                 onClick={() => {
                                     document.cookie =
                                         "dms-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";

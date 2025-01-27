@@ -58,7 +58,7 @@ export default function SideMenu() {
                                     <ul>
                                         {data.map((element) => (
                                             <li key={element.Device_Id}>
-                                                <a>{element.Name}</a>
+                                                <a href={`/dashboard/devices/${element.Device_Id}/details`}>{element.Name}</a>
                                             </li>
                                         ))}
                                     </ul>
