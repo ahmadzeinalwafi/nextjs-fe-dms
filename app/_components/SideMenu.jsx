@@ -12,7 +12,7 @@ export default function SideMenu() {
 
                 if (userId) {
                     const response = await axios.get(
-                        `${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/users/${userId}/devices`
+                        `${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/users/${userId}/devices`,
                     );
                     console.log(response);
                     setData(response.data.data);

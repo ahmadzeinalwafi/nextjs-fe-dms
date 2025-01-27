@@ -4,7 +4,7 @@ import axios from 'axios';
 import { NextResponse } from 'next/server';
 import { serialize } from 'cookie';
 
-const loginEndpoint = 'http://localhost:8888/auth/token';
+const loginEndpoint = `${process.env.NEXT_PUBLIC_INTERNAL_BACKEND_URL}/auth/token`
 
 export async function POST(request) {
   try {
