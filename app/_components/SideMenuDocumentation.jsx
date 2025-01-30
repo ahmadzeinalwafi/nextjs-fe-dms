@@ -8,13 +8,19 @@ export default function SideMenuDocumentation() {
                 </li>
                 <li>
                     <details open>
-                        <summary>Preparing Devices Endpoint</summary>
+                        <summary>Dashboard</summary>
                         <ul>
                             <li>
-                                <a href="/documentation/preparing-devices-endpoint#registering-device">Registering Device</a>
+                                <a href="/documentation/dashboard#registering-device">Registering Device</a>
                             </li>
                             <li>
-                                <a href="/documentation/preparing-devices-endpoint#configuring-device">Configuring Device</a>
+                                <a href="/documentation/dashboard#configuring-device">Configuring Device</a>
+                            </li>
+                            <li>
+                                <a href="/documentation/dashboard#summary-devices">Summary Devices</a>
+                            </li>
+                            <li>
+                                <a href="/documentation/dashboard#dashboard">Dashboard</a>
                             </li>
                         </ul>
                     </details>
