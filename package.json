@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@ljharb/tsconfig": "^0.2.3",
+    "@mdx-js/loader": "^3.1.0",
+    "@mdx-js/react": "^3.1.0",
+    "@next/mdx": "^15.1.6",
+    "@types/mdx": "^2.0.13",
     "axios": "^1.7.9",
     "chart.js": "^4.4.7",
     "cookie": "^1.0.2",
