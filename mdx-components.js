@@ -26,7 +26,7 @@ export function useMDXComponents(components) {
       );
     },    
     h3: ({ children }) => (
-      <h3 className="text-2xl font-medium text-gray-600 my-2">{children}</h3>
+      <h3 className="text-xl font-medium text-gray-600 my-2 text-center">{children}</h3>
     ),
     p: ({ children }) => (
       <p className="text-base text-gray-700 my-5 leading-relaxed text-justify indent-10">
