@@ -12,10 +12,10 @@ export function useMDXComponents(components) {
       const headingText = Array.isArray(children) ? children.join('') : children.toString();
 
       console.log(headingText)
-    
+
       // Convert to lowercase, remove extra spaces, and replace spaces with hyphens
       const headingId = headingText.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "");
-    
+
       return (
         <h2
           id={headingId} // Using the generated heading ID
@@ -24,7 +24,7 @@ export function useMDXComponents(components) {
           {children}
         </h2>
       );
-    },    
+    },
     h3: ({ children }) => (
       <h3 className="text-xl font-medium text-gray-600 my-2 text-center">{children}</h3>
     ),
@@ -58,9 +58,12 @@ export function useMDXComponents(components) {
       </a>
     ),
     code: ({ children }) => (
-      <code className="bg-gray-100 text-red-600 px-2 py-1 rounded text-sm font-mono">
-        {children}
-      </code>
+      <div id="no-indent">
+        <code className="bg-gray-100 text-red-600 px-2 py-1 rounded text-sm font-mono">
+          {children}
+        </code>
+      </div>
+
     ),
     pre: ({ children }) => (
       <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-auto my-4">

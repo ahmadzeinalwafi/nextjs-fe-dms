@@ -19,3 +19,18 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+#no-indent {
+  text-indent: 0%;
+}
+
+#no-indent code {
+  background-color: #012c4a;  /* light gray background */
+  color: #f0ff6b;  /* red text color */
+  padding: 0.5rem 1rem;  /* padding inside the code */
+  border-radius: 0.375rem;  /* rounded corners */
+  font-size: 0.875rem;  /* small text */
+  font-family: 'Courier New', monospace;  /* monospace font */
+  display: inline-block;  /* inline styling for code */
+  word-wrap: break-word;  /* wrap long words */
+}
