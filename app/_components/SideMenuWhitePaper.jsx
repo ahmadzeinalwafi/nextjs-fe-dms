@@ -36,6 +36,9 @@ export default function SideMenuWhitePaper() {
                         <summary>Technical Overview</summary>
                         <ul>
                             <li>
+                                <a href="/about/project/technical-overview#code-architecture">Code Architecture</a>
+                            </li>
+                            <li>
                                 <a href="/about/project/technical-overview#system-architecture">System Architecture</a>
                             </li>
                             <li>
