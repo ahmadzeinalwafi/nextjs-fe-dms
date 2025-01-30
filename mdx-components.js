@@ -7,9 +7,24 @@ export function useMDXComponents(components) {
     h1: ({ children }) => (
       <h1 className="text-4xl font-bold text-gray-800 text-center">{children}</h1>
     ),
-    h2: ({ children }) => (
-      <h2 className="text-3xl font-semibold text-gray-700 my-3">{children}</h2>
-    ),
+    h2: ({ children }) => {
+      // Safely extract string content from children
+      const headingText = Array.isArray(children) ? children.join('') : children.toString();
+
+      console.log(headingText)
+    
+      // Convert to lowercase, remove extra spaces, and replace spaces with hyphens
+      const headingId = headingText.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "");
+    
+      return (
+        <h2
+          id={headingId} // Using the generated heading ID
+          className="text-3xl font-semibold text-gray-700 my-3"
+        >
+          {children}
+        </h2>
+      );
+    },    
     h3: ({ children }) => (
       <h3 className="text-2xl font-medium text-gray-600 my-2">{children}</h3>
     ),
