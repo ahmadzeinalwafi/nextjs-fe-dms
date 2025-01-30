@@ -1,10 +1,13 @@
+"use client"
 import Image from "next/image";
 import Footer from "./_components/Footer";
+import FloatingAlert from "./_components/Alert/FloatingAlert";
 
 export default function Home() {
 
   return (
     <div>
+      <FloatingAlert/>
       <div className="bg-gray-900 text-gray-100">
         <section className="relative bg-gradient-to-r from-blue-900 to-blue-2000 text-white py-20">
           <div className="container mx-auto px-6 lg:px-20">
