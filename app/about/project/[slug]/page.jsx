@@ -1,39 +1,35 @@
-"use client";
-
-import dynamic from "next/dynamic";
-import { useParams } from "next/navigation";
-import SideMenuWhitePaper from "@/app/_components/SideMenuWhitePaper";
-import { MDXProvider } from "@mdx-js/react";
+import { compileMDX } from 'next-mdx-remote/rsc'
+import * as React from "react"
+import fs from "fs";
+import path from "path";
 import { useMDXComponents } from "@/mdx-components";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import SideMenuWhitePaper from '@/app/_components/SideMenuWhitePaper';
 
-export default function Project() {
-  const { slug } = useParams();
+export default async function WhitePaper({params}) {
+  // Optionally provide a type for your frontmatter object
+  const awaitedParams = await params; // ✅ Ensure `params` is resolved before accessing properties
+  const slug = awaitedParams?.slug; 
 
-  const Docs = dynamic(
-    () =>
-      import(`@/docs/project/${slug}.md`).catch(() => {
-        notFound();
-      }),
-    { ssr: false }
-  );
-
+  const filePath = path.join(process.cwd(), "docs/project", `${slug}.md`);
   const components = useMDXComponents({});
+
+  if (!fs.existsSync(filePath)) {
+      console.error("⚠️ MDX file not found:", filePath);
+      return null;
+    }
+  const fileContents = fs.readFileSync(filePath, "utf-8");
+  const {content, _} = await compileMDX({
+    source: fileContents,
+  })
 
   return (
     <div className="flex h-screen">
-      <SideMenuWhitePaper />
-      {/* Main Content */}
-      <div className="flex-1 bg-gray-900 text-white overflow-y-auto px-56">
-        <Suspense fallback={<div>Loading...</div>}>
-          <MDXProvider components={components}>
-            <div className="text-justify indent-10 my-5">
-              <Docs />
-            </div>
-          </MDXProvider>
-        </Suspense>
+      <SideMenuWhitePaper/>
+      <div className="flex-1 bg-gray-900 text-white overflow-y-auto ">
+        <div className='px-56 text-justify indent-10 py-6'>
+          {React.cloneElement(content, { components })}
+        </div>
       </div>
     </div>
-  );
+  )
 }

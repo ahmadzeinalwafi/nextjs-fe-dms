@@ -8,19 +8,26 @@ export function useMDXComponents(components) {
       <h1 className="text-4xl font-bold text-gray-800 text-center">{children}</h1>
     ),
     h2: ({ children }) => {
-      // Safely extract string content from children
-      const headingText = Array.isArray(children) ? children.join('') : children.toString();
+      let headingText = "";
 
-      console.log(headingText)
+      if (typeof children === "string") {
+        headingText = children;
+      } else if (Array.isArray(children)) {
+        headingText = children.map((child) =>
+          typeof child === "string" ? child : ""
+        ).join("");
+      }
 
-      // Convert to lowercase, remove extra spaces, and replace spaces with hyphens
-      const headingId = headingText.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "");
+      console.log("Heading:", headingText); // Debugging output
+
+      const headingId = headingText
+        .trim() // Remove leading/trailing spaces
+        .toLowerCase()
+        .replace(/\s+/g, "-") // Replace spaces with hyphens
+        .replace(/[^a-z0-9-]/g, ""); // Remove special characters
 
       return (
-        <h2
-          id={headingId} // Using the generated heading ID
-          className="text-3xl font-semibold text-gray-700 my-3"
-        >
+        <h2 id={headingId} className="text-3xl font-semibold text-gray-700 my-3">
           {children}
         </h2>
       );
@@ -29,9 +36,11 @@ export function useMDXComponents(components) {
       <h3 className="text-xl font-medium text-gray-600 my-2 text-center">{children}</h3>
     ),
     p: ({ children }) => (
-      <p className="text-base text-gray-700 my-5 leading-relaxed text-justify indent-10">
-        {children}
-      </p>
+      <div className="text-base text-gray-700 my-5 leading-relaxed text-justify indent-10">
+        <p>
+          {children}
+        </p>
+      </div>
     ),
     ul: ({ children }) => (
       <ul className="list-disc list-inside space-y-2 text-gray-700">{children}</ul>
