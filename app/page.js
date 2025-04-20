@@ -1,5 +1,4 @@
 "use client"
-import Image from "next/image";
 import Footer from "./_components/Footer";
 import FloatingAlert from "./_components/Alert/FloatingAlert";
 
@@ -19,12 +18,18 @@ export default function Home() {
                 <p className="text-lg lg:text-xl mb-6">
                   Transform IoT into real-world impact with cutting-edge monitoring and management solutions.
                 </p>
+                <div className="flex flex-col lg:flex-row gap-4">
                 <a href="#features" className="btn btn-primary btn-lg rounded-lg shadow-lg">Explore Features</a>
+                <a className="flex items-center btn btn-primary btn-lg rounded-lg shadow-lg" href="https://github.com/ahmadzeinalwafi/nextjs-fe-dms">
+                  Source Code <img src="/github-mark-white.png" className="w-6 ml-2" />
+                </a>
+                </div>
               </div>
               <div className="lg:w-1/2 mt-10 lg:mt-0">
                 <img src="/static/hero.webp" alt="IoT Dashboard" className="w-full rounded-xl shadow-lg" />
               </div>
             </div>
+
           </div>
         </section>
 
@@ -46,7 +51,7 @@ export default function Home() {
               </div>
               <div className="card bg-green-900 p-6 shadow-lg">
                 <div className="card-body">
-                  <h3 className="text-xl font-semibold mb-4">Custom Alerts</h3>
+                  <h3 className="text-xl font-semibold mb-4">Custom Alerts [SOON] </h3>
                   <p>Set up alerts and notifications to ensure you're always in the loop.</p>
                 </div>
               </div>
